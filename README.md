@@ -1,2 +1,2 @@
-# Find-That-Cell
-Finds Jupyter (colab) notebook cells programmatically by given them a label
+# ExecThatCell
+Execute a Jupyter (colab) notebook cell programmatically by searching for its label
