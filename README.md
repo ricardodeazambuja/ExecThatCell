@@ -1,2 +1,2 @@
-# Find-and-Exec
-Execute Jupyter (colab) notebook cells programmatically by given them a label
+# Find-That-Cell
+Finds Jupyter (colab) notebook cells programmatically by given them a label
