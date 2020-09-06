@@ -1,5 +1,6 @@
 # ExecThatCell
-Execute a Jupyter (colab) notebook cell programmatically by searching for its label
+(Re)Execute a Jupyter (colab) notebook cell programmatically by searching for its label.
+(I added the "Re" because the cell needs to be executed at least once as this library is not using the ipynb notebook file, but the interpreter to find the cells and it will work even if the cell was not saved in the notebook file)
 
 
 ## Installation (Python3 because [you should not use Python2 anymore](https://www.python.org/doc/sunset-python-2/)):
