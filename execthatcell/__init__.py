@@ -28,13 +28,13 @@ __author__ = "Ricardo de Azambuja"
 __copyright__ = "Copyright 2020, MISTLab.ca"
 __credits__ = [""]
 __license__ = "GPL"
-__version__ = "0.1"
+__version__ = "0.1.1"
 __maintainer__ = "Ricardo de Azambuja"
 __email__ = "ricardo.azambuja@gmail.com"
 __status__ = "Development"
 
 
-def execthatcell(label, cell_marker="#@#", latest=True):
+def execthatcell(label, cell_marker="#@#", latest=True, exec_it=True):
   """Finds a cell according to its label / cell_marker and execute its content.
   The label must be the first thing in the first line of your cell!!
 
@@ -47,6 +47,10 @@ def execthatcell(label, cell_marker="#@#", latest=True):
   latest : bool, optional
       Executes the latest version of the cell according to the last time
       the cell was executed. If latest=False it will execute the oldest version.
+  exec_it : bool, optional
+      When set to False (default is True) it will return the index of the cell
+      without executing it. Useful when you want to easily catch exceptions by
+      directly using exec(In[index]).
   """
   ip = get_ipython()
   In = ip.user_ns["In"]
@@ -56,4 +60,7 @@ def execthatcell(label, cell_marker="#@#", latest=True):
     if cell_marker in c:
       if not c.find(cell_marker):
         if label in c[len(cell_marker):c.find("\n")]:
-          _ = ip.run_cell(In[i*order+offset], store_history=False, silent=True)
+          if exec_it:
+            _ = ip.run_cell(In[i*order+offset], store_history=False, silent=True)
+          else:
+            return i*order+offset
