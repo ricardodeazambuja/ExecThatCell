@@ -22,6 +22,12 @@ $ sudo pip3 install git+git://github.com/ricardodeazambuja/ExecThatCell
 See the [Example.ipynb](https://github.com/ricardodeazambuja/ExecThatCell/blob/master/Example.ipynb).  
 It also works with the IPython interpreter (you know, when you use it directly from a command line without Jupyter). However, to add a label to a cell you need to add a linefeed after it and that means [pressing Ctrl+q followed by Ctrl+j](https://stackoverflow.com/a/46060692).
 
+In the case you just want to execute again a cell that you know the index (the number inside the square brackets after "In"), you could just do something like this (Jupyter notebook, Google Colab or IPython command line version):
+```
+i = 10 # the cell index you want to execute again
+exec(In[i])
+```
+
 
 ## TODO:
 - Test it :D
