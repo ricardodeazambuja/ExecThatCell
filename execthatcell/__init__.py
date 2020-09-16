@@ -28,7 +28,7 @@ __author__ = "Ricardo de Azambuja"
 __copyright__ = "Copyright 2020, MISTLab.ca"
 __credits__ = [""]
 __license__ = "GPL"
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __maintainer__ = "Ricardo de Azambuja"
 __email__ = "ricardo.azambuja@gmail.com"
 __status__ = "Development"
@@ -81,8 +81,6 @@ def execthatcell(label, cell_marker="#@#", latest=True, exec_it=True):
             return
           else:
             return i*order+offset
-        else:
-          raise LabelNotFound(cell_marker,label)
   if not cell_marker_found:
     raise CellMarkerNotFound(cell_marker)
   else:

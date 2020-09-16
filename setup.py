@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name="ExecThatCell",
-    version="0.1.3",
+    version="0.1.4",
     packages=['execthatcell'],
     install_requires=['ipython'],
 
