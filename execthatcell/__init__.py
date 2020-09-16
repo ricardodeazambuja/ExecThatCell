@@ -28,7 +28,7 @@ __author__ = "Ricardo de Azambuja"
 __copyright__ = "Copyright 2020, MISTLab.ca"
 __credits__ = [""]
 __license__ = "GPL"
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __maintainer__ = "Ricardo de Azambuja"
 __email__ = "ricardo.azambuja@gmail.com"
 __status__ = "Development"
@@ -71,14 +71,14 @@ def execthatcell(label, cell_marker="#@#", latest=True, exec_it=True):
   order, offset = (-1,-1) if latest else (1,0)
   for i,c in enumerate(In[::order]):
     if cell_marker in c:
-      cell_marker_found = True
-      # must be the first line
-      if not c.find(cell_marker+label):
+      # must be the first thing in the first line
+      if cell_marker == c[:len(cell_marker)]:
+        cell_marker_found = True
         # must exactly match the label
         if label == c[len(cell_marker):c.find("\n")]:
           if exec_it:
             _ = ip.run_cell(In[i*order+offset], store_history=False, silent=True)
-            break
+            return
           else:
             return i*order+offset
         else:
