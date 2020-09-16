@@ -28,11 +28,19 @@ __author__ = "Ricardo de Azambuja"
 __copyright__ = "Copyright 2020, MISTLab.ca"
 __credits__ = [""]
 __license__ = "GPL"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __maintainer__ = "Ricardo de Azambuja"
 __email__ = "ricardo.azambuja@gmail.com"
 __status__ = "Development"
 
+
+class LabelNotFound(Exception):
+   def __init__(self, cellmarker, label):
+        super().__init__(f"The cellmarker '{cellmarker}' with label '{label}' was not found!")
+
+class CellMarkerNotFound(Exception):
+   def __init__(self, cellmarker):
+        super().__init__(f"The cellmarker '{cellmarker}' was not found!")
 
 def execthatcell(label, cell_marker="#@#", latest=True, exec_it=True):
   """Finds a cell according to its label / cell_marker and execute its content.
@@ -52,15 +60,30 @@ def execthatcell(label, cell_marker="#@#", latest=True, exec_it=True):
       without executing it. Useful when you want to easily catch exceptions by
       directly using exec(In[index]).
   """
+
+  assert type(label)==str, "label must be a string"
+  assert type(cell_marker)==str, "cell_marker must be a string"
+    
   ip = get_ipython()
   In = ip.user_ns["In"]
-
+  
+  cell_marker_found = False
   order, offset = (-1,-1) if latest else (1,0)
   for i,c in enumerate(In[::order]):
     if cell_marker in c:
-      if not c.find(cell_marker):
-        if label in c[len(cell_marker):c.find("\n")]:
+      cell_marker_found = True
+      # must be the first line
+      if not c.find(cell_marker+label):
+        # must exactly match the label
+        if label == c[len(cell_marker):c.find("\n")]:
           if exec_it:
             _ = ip.run_cell(In[i*order+offset], store_history=False, silent=True)
+            break
           else:
             return i*order+offset
+        else:
+          raise LabelNotFound(cell_marker,label)
+  if not cell_marker_found:
+    raise CellMarkerNotFound(cell_marker)
+  else:
+    raise LabelNotFound(cell_marker,label)
